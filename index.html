@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Heights BJJ · Pan Asian 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090d;--surface:#0f1218;--surface2:#171c26;--surface3:#1e2433;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --text:#eef0f7;--muted:#5a6378;--accent:#e8ff47;--accent2:#c8e000;
+  --blue:#4fa3ff;--red:#ff5a5a;--green:#3ddc84;--orange:#ff9642;--purple:#b07aff;
+  --gold:#ffd700;--silver:#c0c8d8;--bronze:#cd7f32;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* animated background */
+body::before{content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 0%,rgba(232,255,71,0.06) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 70% at 0% 100%,rgba(79,163,255,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,rgba(176,122,255,0.03) 0%,transparent 60%);
+  pointer-events:none;z-index:0;}
+
+.page{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 16px 80px;}
+
+/* ── Header ── */
+header{padding:28px 0 20px;margin-bottom:4px;}
+.header-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.logo-block{}
+.logo-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
+.logo-title{font-family:'Bebas Neue',sans-serif;font-size:46px;line-height:0.88;letter-spacing:1.5px;color:var(--text);}
+.logo-title span{color:var(--accent);}
+.logo-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:0.05em;}
+.header-right{text-align:right;flex-shrink:0;}
+.event-badge{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;text-align:center;}
+.event-badge-title{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent);line-height:1;letter-spacing:1px;}
+.event-badge-sub{font-size:10px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace;}
+
+.sync-row{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background 0.3s;}
+.sync-dot.live{background:var(--green);animation:blink 1.5s infinite;}
+.sync-dot.error{background:var(--red);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-label{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;flex:1;}
+
+/* ── Nav tabs ── */
+.nav-tabs{display:flex;gap:4px;margin:16px 0;background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:4px;}
+.nav-tab{flex:1;text-align:center;padding:9px 8px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;font-family:'DM Sans',sans-serif;border:none;background:none;}
+.nav-tab.active{background:var(--accent);color:#07090d;}
+.nav-tab-icon{display:block;font-size:16px;margin-bottom:2px;}
+
+/* ── Setup card ── */
+.setup-wrap{margin-bottom:16px;}
+.setup-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:16px;}
+.setup-row{display:flex;gap:8px;}
+.setup-select{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;}
+.setup-select option{background:var(--surface2);}
+.btn-track{background:var(--accent);color:#07090d;border:none;border-radius:10px;padding:10px 22px;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:0.02em;}
+.btn-track:disabled{opacity:0.5;cursor:default;}
+
+/* ── Next match banner ── */
+.next-wrap{margin-bottom:16px;}
+.next-card{background:linear-gradient(135deg,#1c2412 0%,#141a0d 100%);border:1px solid rgba(232,255,71,0.25);border-radius:18px;padding:18px 20px;position:relative;overflow:hidden;}
+.next-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(232,255,71,0.1),transparent 70%);pointer-events:none;}
+.next-card::after{content:'NEXT';position:absolute;bottom:-12px;right:16px;font-family:'Bebas Neue',sans-serif;font-size:72px;color:rgba(232,255,71,0.04);letter-spacing:4px;pointer-events:none;}
+.next-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.next-eyebrow::before{content:'';width:16px;height:2px;background:var(--accent);border-radius:2px;}
+.next-name{font-size:21px;font-weight:700;color:var(--text);margin-bottom:2px;line-height:1.2;}
+.next-sub{font-size:12px;color:rgba(232,255,71,0.45);margin-bottom:16px;}
+.countdown-row{display:flex;gap:8px;}
+.cd-unit{background:rgba(0,0,0,0.35);border:1px solid rgba(232,255,71,0.12);border-radius:10px;padding:8px 12px;text-align:center;min-width:56px;}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--accent);line-height:1;}
+.cd-label{font-size:9px;color:rgba(232,255,71,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+.all-done{font-size:15px;font-weight:600;color:var(--accent);padding:4px 0;}
+.ready-banner{display:none;align-items:center;gap:10px;background:rgba(232,255,71,0.08);border:1px solid rgba(232,255,71,0.25);border-radius:10px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;color:var(--accent);}
+.ready-banner.show{display:flex;}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--accent);animation:pulse 1.1s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.6)}}
+
+/* ── Filter pills ── */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.pill{font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.pill.active{background:var(--accent);color:#07090d;border-color:var(--accent);}
+
+/* ── Match cards ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:10px;transition:all 0.2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border2);border-radius:3px 0 0 3px;}
+.card.is-next::before{background:var(--accent);}
+.card.is-live::before{background:var(--orange);}
+.card.is-done::before{background:var(--muted);}
+.card.is-next{border-color:rgba(232,255,71,0.2);background:linear-gradient(135deg,#13160e 0%,#0f1209 100%);}
+.card.is-past{opacity:0.5;}
+.card.is-live{border-color:rgba(255,150,66,0.3);background:linear-gradient(135deg,#161007 0%,#0f0a04 100%);}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.fighter-block{}
+.fighter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px;}
+.fighter-name{font-size:19px;font-weight:700;color:var(--text);}
+.fighter-full{font-size:11px;color:var(--muted);}
+.badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:0.06em;text-transform:uppercase;}
+.badge-next{background:var(--accent);color:#07090d;}
+.badge-live{background:rgba(255,150,66,0.2);color:var(--orange);border:1px solid rgba(255,150,66,0.3);}
+.time-col{text-align:right;flex-shrink:0;margin-left:10px;}
+.start-time{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue);line-height:1;}
+.start-time.past{color:var(--muted);}
+.match-cd{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.match-cd.soon{color:var(--accent);}
+
+/* mat+match info row */
+.match-info-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.mat-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(79,163,255,0.1);border:1px solid rgba(79,163,255,0.2);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--blue);}
+.mat-chip-icon{font-size:12px;}
+.match-num-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(176,122,255,0.1);border:1px solid rgba(176,122,255,0.2);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--purple);}
+.round-chip{display:inline-flex;align-items:center;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--muted);}
+.live-chip{background:rgba(255,150,66,0.12);border:1px solid rgba(255,150,66,0.25);color:var(--orange);}
+.done-chip{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);}
+
+.divider{height:1px;background:var(--border);margin:10px 0;}
+.group-label{font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.4;}
+.vs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px;}
+.vs-label{font-size:10px;font-weight:700;color:var(--muted);background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:2px 6px;flex-shrink:0;margin-top:2px;letter-spacing:0.05em;}
+.vs-name{font-size:14px;font-weight:600;color:var(--text);}
+.vs-club{font-size:11px;color:var(--muted);margin-top:1px;}
+
+.result-row{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.result-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:10px;font-size:13px;font-weight:700;}
+.result-win{background:rgba(61,220,132,0.12);border:1px solid rgba(61,220,132,0.25);color:var(--green);}
+.result-lose{background:rgba(255,90,90,0.1);border:1px solid rgba(255,90,90,0.2);color:var(--red);}
+
+/* ── Section separators ── */
+.section-sep{display:flex;align-items:center;gap:10px;margin:4px 0 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.section-sep::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── Results tab ── */
+.results-view{display:none;}
+.results-view.active{display:block;}
+.live-view{display:block;}
+.live-view.hidden{display:none;}
+
+.results-header{text-align:center;padding:20px 0 24px;}
+.results-title{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text);letter-spacing:2px;}
+.results-title span{color:var(--accent);}
+.results-sub{font-size:12px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace;}
+
+.athlete-result-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:10px;}
+.athlete-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.athlete-result-name{font-size:18px;font-weight:700;color:var(--text);}
+.athlete-result-full{font-size:11px;color:var(--muted);margin-top:1px;}
+.medals-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.medal-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:10px;font-size:12px;font-weight:700;}
+.medal-gold  {background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.3);color:var(--gold);}
+.medal-silver{background:rgba(192,200,216,0.1);border:1px solid rgba(192,200,216,0.25);color:var(--silver);}
+.medal-bronze{background:rgba(205,127,50,0.12);border:1px solid rgba(205,127,50,0.3);color:var(--bronze);}
+.medal-none  {background:rgba(255,255,255,0.04);border:1px solid var(--border2);color:var(--muted);}
+.medal-icon{font-size:15px;}
+.division-label{font-size:10px;font-weight:600;background:rgba(79,163,255,0.08);border:1px solid rgba(79,163,255,0.15);color:var(--blue);padding:2px 8px;border-radius:999px;margin-left:4px;text-transform:uppercase;letter-spacing:0.05em;}
+
+.no-results-yet{text-align:center;padding:40px 16px;color:var(--muted);}
+.no-results-yet .big-icon{font-size:40px;margin-bottom:12px;}
+.no-results-yet p{font-size:13px;line-height:1.6;}
+
+/* ── States ── */
+.loading-row{text-align:center;padding:40px 16px;}
+.spinner{display:inline-block;width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-row p{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
+.error-msg{background:rgba(255,90,90,0.07);border:1px solid rgba(255,90,90,0.2);border-radius:12px;padding:12px 16px;font-size:12px;color:var(--red);margin-bottom:14px;display:none;}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);font-size:14px;}
+
+/* ── Bracket Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);}
+.modal-overlay.open .modal-sheet{transform:translateY(0);}
+.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0;}
+.modal-header{padding:16px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--text);line-height:1.1;}
+.modal-sub{font-size:11px;color:var(--muted);margin-top:3px;font-family:'DM Mono',monospace;}
+.modal-close{position:absolute;top:14px;right:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--muted);}
+.modal-body{overflow-y:auto;overflow-x:auto;padding:16px 20px 32px;flex:1;-webkit-overflow-scrolling:touch;}
+
+/* Bracket tree */
+.bracket-wrap{display:flex;gap:0;align-items:flex-start;min-width:max-content;}
+.bracket-round{display:flex;flex-direction:column;justify-content:space-around;min-width:150px;flex-shrink:0;}
+.bracket-round-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;text-align:center;padding:0 8px 10px;}
+.bracket-matches{display:flex;flex-direction:column;gap:0;}
+.bracket-match-wrap{display:flex;align-items:center;position:relative;}
+.bracket-match{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:6px 0;width:140px;flex-shrink:0;cursor:pointer;transition:border-color 0.15s;}
+.bracket-match:hover{border-color:rgba(232,255,71,0.3);}
+.bracket-match.is-our-match{border-color:rgba(232,255,71,0.4);background:linear-gradient(135deg,#13160e,#0f1209);}
+.bracket-match.is-live-match{border-color:rgba(255,150,66,0.5);}
+.bracket-seat{padding:7px 10px;font-size:12px;font-weight:500;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:4px;min-height:34px;line-height:1.2;}
+.bracket-seat.tbd{color:var(--muted);font-style:italic;}
+.bracket-seat.winner{background:rgba(232,255,71,0.07);color:var(--accent);font-weight:700;}
+.bracket-seat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bracket-seat-flag{font-size:11px;flex-shrink:0;}
+.our-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.bracket-sep{height:1px;background:var(--border);margin:0 8px;}
+/* connector lines */
+.bracket-connector{width:20px;flex-shrink:0;position:relative;align-self:stretch;}
+.bracket-connector svg{position:absolute;inset:0;width:100%;height:100%;}
+.bracket-loading{text-align:center;padding:30px;color:var(--muted);font-size:13px;}
+.bracket-loading .spinner{margin:0 auto 10px;}
+
+/* Fighting Now separator */
+.live-sep{color:var(--orange);}
+.live-sep::after{background:rgba(255,150,66,0.3);}
+
+
+/* Medal override row */
+.medal-override-row{margin-top:8px;display:flex;align-items:center;flex-wrap:wrap;gap:4px;}
+.override-btn{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:5px 9px;font-size:13px;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;}
+.override-btn.override-active{border-color:rgba(232,255,71,0.5);background:rgba(232,255,71,0.1);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-eyebrow">&#9679; Live Tracker</div>
+        <div class="logo-title">GOLDEN<br><span>HEIGHTS</span></div>
+        <div class="logo-sub">JIU-JITSU &middot; 15 ATHLETES</div>
+      </div>
+      <div class="header-right">
+        <div class="event-badge">
+          <div class="event-badge-title">PAN ASIAN</div>
+          <div class="event-badge-sub">JUN 13 &middot; MANILA</div>
+        </div>
+      </div>
+    </div>
+    <div class="sync-row">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span class="sync-label" id="sync-label">Not started</span>
+    </div>
+  </header>
+
+  <!-- Nav tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-live" onclick="switchTab('live')">
+      <span class="nav-tab-icon">&#9889;</span>Live
+    </button>
+    <button class="nav-tab" id="tab-results" onclick="switchTab('results')">
+      <span class="nav-tab-icon">&#127942;</span>Results
+    </button>
+  </div>
+
+  <!-- Live view -->
+  <div class="live-view" id="live-view">
+    <div class="setup-wrap">
+      <div class="setup-card">
+        <div class="setup-row">
+          <select class="setup-select" id="mat-filter"><option value="">All mats</option></select>
+          <button class="btn-track" id="btn-track" onclick="startTracking()">Track &#8599;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-msg" id="error-msg"></div>
+
+    <div class="next-wrap" id="next-wrap" style="display:none;">
+      <div class="next-card">
+        <div class="next-eyebrow">Next match up</div>
+        <div class="next-name" id="nc-name">&mdash;</div>
+        <div class="next-sub" id="nc-sub"></div>
+        <div class="countdown-row" id="nc-countdown">
+          <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">hrs</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">min</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">sec</div></div>
+        </div>
+        <div class="ready-banner" id="ready-banner">
+          <div class="pulse"></div>
+          <span id="ready-text">Head to the mat now!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <div id="cards"></div>
+  </div>
+
+  <!-- Results view -->
+  <div class="results-view" id="results-view">
+    <div class="results-header">
+      <div class="results-title">TEAM<br><span>RESULTS</span></div>
+      <div class="results-sub">Pan Asian 2026 &middot; Manila</div>
+    </div>
+    <div id="results-cards"></div>
+  </div>
+
+</div>
+
+<script>
+var BASE  = 'https://bjjfphilippines.smoothcomp.com';
+var EVENT = '31193';
+
+var ROSTER = [
+  {full:'Odinn Zachary Villarosa',  nick:'Odinn'  },
+  {full:'Joaquin Matteus Bulatao',  nick:'Aki'    },
+  {full:'Mikel Dominic Villarosa',  nick:'Mikel'  },
+  {full:'Inigo Alfonso Villarosa',  nick:'Inigo'  },
+  {full:'Stephen John Lao',         nick:'Stephen'},
+  {full:'Zion Amir Regudo',         nick:'Zion'   },
+  {full:'Antonio Samuel Distajo',   nick:'Antonio'},
+  {full:'Francis Marcelino',        nick:'Francis'},
+  {full:'Zachary Amber Regudo',     nick:'Amber'  },
+  {full:'Dondon Cenir',             nick:'Dondon' },
+  {full:'Marion Noel Manucom',      nick:'Ion'    },
+  {full:'Mitchelle Ian Nadres',     nick:'Ian'    },
+  {full:'Summer Nadres',            nick:'Summer' },
+  {full:'Mikyla Noelle Manucom',    nick:'Kaylla' },
+  {full:'Sarah Ysabella Sobrino',    nick:'Bella'  }
+];
+var ROSTER_NORM = ROSTER.map(function(r){
+  return r.full.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,'').trim();
+});
+function normName(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,'').trim();
+}
+function seatInRoster(name){
+  var n=normName(name);
+  for(var i=0;i<ROSTER_NORM.length;i++){
+    var r=ROSTER_NORM[i];
+    if(n===r) return ROSTER[i];
+    var rW=r.split(' '),nW=n.split(' ');
+    if(rW.length>=2&&nW.length>=2&&rW[0]===nW[0]&&rW[rW.length-1]===nW[nW.length-1]) return ROSTER[i];
+    if(r.length>4&&n.indexOf(r)>=0) return ROSTER[i];
+    if(n.length>4&&r.indexOf(n)>=0) return ROSTER[i];
+  }
+  return null;
+}
+
+var teamMatches=[],curFilter='all',cdTimer=null,curTab='live';
+
+function p2(n){return n<10?'0'+n:''+n;}
+function fmtTime(iso){
+  if(!iso) return '\u2014';
+  var d=new Date(iso);
+  return isNaN(d)?'\u2014':d.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',hour12:true});
+}
+function fmtCd(ms){
+  if(ms<=0) return null;
+  var t=Math.floor(ms/1000);
+  return{h:Math.floor(t/3600),m:Math.floor((t%3600)/60),s:t%60};
+}
+function validDate(iso){if(!iso)return null;var d=new Date(iso);return isNaN(d)?null:d;}
+function matchState(m){
+  if(m.state==='started'||m.time_passed) return 'live';
+  var real=(m.seats||[]).filter(function(s){return s.type==='registration';});
+  var hasWinner=m.wonBy||real.some(function(s){return s.isWinner;});
+  if(m.state==='finished'&&hasWinner) return 'done';
+  return 'upcoming';
+}
+function ge(id){return document.getElementById(id);}
+function st(id,v){var e=ge(id);if(e)e.textContent=v;}
+function sh(id,v){var e=ge(id);if(e)e.innerHTML=v;}
+function setSync(state,label){
+  var d=ge('sync-dot');
+  if(d) d.className='sync-dot'+(state==='live'?' live':state==='error'?' error':'');
+  st('sync-label',label);
+}
+function showError(msg){var e=ge('error-msg');if(e){e.textContent=msg;e.style.display=msg?'block':'none';}}
+
+/* ── Tab switching ── */
+window.switchTab=function(tab){
+  curTab=tab;
+  ge('tab-live').classList.toggle('active',tab==='live');
+  ge('tab-results').classList.toggle('active',tab==='results');
+  ge('live-view').classList.toggle('hidden',tab!=='live');
+  ge('results-view').classList.toggle('active',tab==='results');
+  if(tab==='results') renderResults();
+};
+
+/* ── Fetch ── */
+async function fetchBrackets(){
+  var r=await fetch(BASE+'/en/event/'+EVENT+'/schedule/brackets.json');
+  if(!r.ok) throw new Error('brackets '+r.status);
+  return (await r.json()).brackets||[];
+}
+async function fetchBracket(id){
+  var r=await fetch(BASE+'/en/event/'+EVENT+'/schedule/new/bracket.json/'+id);
+  if(!r.ok) return [];
+  return (await r.json()).matches||[];
+}
+async function fetchInBatches(brackets){
+  var BATCH=10,DELAY=200,results=[];
+  for(var i=0;i<brackets.length;i+=BATCH){
+    var batch=brackets.slice(i,i+BATCH);
+    var res=await Promise.all(batch.map(function(b){return fetchBracket(b.bracket_id);}));
+    results=results.concat(res);
+    if(i+BATCH<brackets.length) await new Promise(function(r){setTimeout(r,DELAY);});
+  }
+  return results;
+}
+
+/* ── Determine division type from group string ── */
+function getDivType(group){
+  if(!group) return '';
+  var g=group.toLowerCase();
+  if(g.indexOf('no gi')>=0||g.indexOf('no-gi')>=0||g.indexOf('nogi')>=0) return 'No-Gi';
+  return 'Gi';
+}
+
+/* ── Load ── */
+async function load(){
+  showError('');
+  setSync('','Fetching\u2026');
+  ge('cards').innerHTML='<div class="loading-row"><div class="spinner"></div><p>Scanning brackets\u2026</p></div>';
+  try{
+    var brackets=await fetchBrackets();
+    var matMap={},matsSeen={};
+    brackets.forEach(function(b){matMap[b.bracket_id]=b.mats||'';if(b.mats)matsSeen[b.mats]=1;});
+    var sel=ge('mat-filter');
+    if(sel){
+      var cur=sel.value;
+      sel.innerHTML='<option value="">All mats</option>';
+      Object.keys(matsSeen).sort().forEach(function(m){
+        var o=document.createElement('option');o.value=m;o.textContent=m;
+        if(m===cur)o.selected=true;sel.appendChild(o);
+      });
+    }
+    var matFilter=sel?sel.value:'';
+    var filtered=matFilter?brackets.filter(function(b){return b.mats===matFilter;}):brackets;
+    var allArrays=await fetchInBatches(filtered);
+    var found=[];
+    allArrays.forEach(function(matches){
+      (matches||[]).forEach(function(match){
+        match._mat=matMap[match.bracket_id]||'';
+        var seats=match.seats||[];
+        var real=seats.filter(function(s){return s.type==='registration';});
+        var hasOurs=real.some(function(s){return seatInRoster(s.name);});
+        var bye=real.length<2&&seats.filter(function(s){return s.type==='tbd';}).length===0;
+        if(hasOurs&&!bye) found.push(match);
+      });
+    });
+    found.sort(function(a,b){
+      var da=validDate(a.estimated_start),db=validDate(b.estimated_start);
+      if(!da&&!db)return 0;if(!da)return 1;if(!db)return -1;return da-db;
+    });
+    teamMatches=found;
+    ge('next-wrap').style.display='block';
+    buildFilters();
+    render();
+    updateNext();
+    if(!cdTimer) cdTimer=setInterval(updateNext,1000);
+    setSync('live','Updated '+new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}));
+    var btn=ge('btn-track');
+    if(btn){btn.disabled=false;btn.textContent='Refresh \u21ba';}
+    if(curTab==='results') renderResults();
+  }catch(e){
+    showError('Could not load. Retrying in 10s... ('+e.message+')');
+    setSync('error','Error - retrying...');
+    ge('cards').innerHTML='';
+    var btn=ge('btn-track');
+    if(btn){btn.disabled=false;btn.textContent='Retry';}
+    scheduleRetry();
+  }
+}
+
+var retryTimer=null;
+function scheduleRetry(){
+  clearTimeout(retryTimer);
+  retryTimer=setTimeout(function(){ showError(''); load(); },10000);
+}
+
+/* ── Filter pills ── */
+function buildFilters(){
+  var seen={};
+  teamMatches.forEach(function(m){(m.seats||[]).forEach(function(s){var e=s.type==='registration'&&seatInRoster(s.name);if(e)seen[e.nick]=1;});});
+  var nicks=Object.keys(seen).sort(function(a,b){
+    return ROSTER.findIndex(function(r){return r.nick===a;})-ROSTER.findIndex(function(r){return r.nick===b;});
+  });
+  if(curFilter!=='all'&&!seen[curFilter]) curFilter='all';
+  var pills='<button class="pill'+(curFilter==='all'?' active':'')+'" onclick="doFilter(\'all\')">All</button>';
+  nicks.forEach(function(nick){
+    pills+='<button class="pill'+(curFilter===nick?' active':'')+'" onclick="doFilter(\''+nick+'\')">'+nick+'</button>';
+  });
+  ge('filters').innerHTML=pills;
+}
+window.doFilter=function(key){
+  curFilter=key;
+  document.querySelectorAll('.pill').forEach(function(p){
+    p.classList.toggle('active',p.textContent===key||(key==='all'&&p.textContent==='All'));
+  });
+  render();
+};
+
+/* ── Next match banner ── */
+function updateNext(){
+  var now=new Date(),next=null;
+  for(var i=0;i<teamMatches.length;i++){
+    var m=teamMatches[i],s=matchState(m);
+    if(s==='live'){next=m;break;}
+    var d=validDate(m.estimated_start);
+    if(s==='upcoming'&&d&&d>now){next=next||m;}
+  }
+  if(!next){
+    st('nc-name',teamMatches.length?'All matches done!':'\u2014');
+    st('nc-sub', teamMatches.length?'Great job, team! \uD83E\uDD4B':'');
+    sh('nc-countdown',teamMatches.length?'<div class="all-done">Done for the day!</div>':'');
+    var rb=ge('ready-banner');if(rb)rb.classList.remove('show');
+    return;
+  }
+  var ourSeat=(next.seats||[]).find(function(s){return s.type==='registration'&&seatInRoster(s.name);});
+  var entry=ourSeat?seatInRoster(ourSeat.name):null;
+  var nick=entry?entry.nick:(ourSeat?ourSeat.name:'Team');
+  var mat=next._mat||'';
+  var matchNum=next.mat_match_nr?'Match #'+next.mat_match_nr:'';
+  st('nc-name',nick+' \u2014 '+(next.group||''));
+  st('nc-sub',[mat,matchNum,next.estimated_start?fmtTime(next.estimated_start):''].filter(Boolean).join(' \u00b7 '));
+  var d=validDate(next.estimated_start),banner=ge('ready-banner');
+  if(d){
+    var diff=d-now,cd=fmtCd(diff);
+    if(cd){
+      st('cd-h',p2(cd.h));st('cd-m',p2(cd.m));st('cd-s',p2(cd.s));
+      if(banner){
+        if(cd.h===0&&cd.m<15){
+          if(!banner.classList.contains('show')&&navigator.vibrate) navigator.vibrate([200,100,200,100,400]);
+          banner.classList.add('show');
+          st('ready-text',nick+' - head to '+mat+' now!');
+        } else banner.classList.remove('show');
+      }
+    } else {
+      sh('nc-countdown','<div class="all-done">Starting now!</div>');
+      if(banner){banner.classList.add('show');st('ready-text',nick+' \u2014 head to '+mat+' now!');}
+    }
+  } else {
+    st('cd-h','--');st('cd-m','--');st('cd-s','--');
+    if(banner)banner.classList.remove('show');
+  }
+}
+
+/* ── Render live cards ── */
+function render(){
+  var list=teamMatches.filter(function(m){
+    if(curFilter==='all') return true;
+    return (m.seats||[]).some(function(s){var e=s.type==='registration'&&seatInRoster(s.name);return e&&e.nick===curFilter;});
+  });
+  if(!list.length){ge('cards').innerHTML='<div class="empty">No matches found.</div>';return;}
+  var live=[],upcoming=[],done=[];
+  list.forEach(function(m){var s=matchState(m);if(s==='live')live.push(m);else if(s==='done')done.push(m);else upcoming.push(m);});
+  var html='';
+  if(live.length){html+='<div class="section-sep live-sep">&#x1F7E0;&nbsp;Fighting Now</div>';live.forEach(function(m){html+=mkcard(m,true,'live');});}
+  if(upcoming.length){html+='<div class="section-sep">&#x23F3;&nbsp;Upcoming</div>';upcoming.forEach(function(m,i){html+=mkcard(m,!live.length&&i===0,'upcoming');});}
+  if(done.length){html+='<div class="section-sep">&#x2713;&nbsp;Completed</div>';done.forEach(function(m){html+=mkcard(m,false,'done');});}
+  ge('cards').innerHTML=html;
+}
+
+
+function mkcard(match,isNext,state){
+  var seats=match.seats||[],now=new Date();
+  var startD=validDate(match.estimated_start),past=startD&&startD<now;
+  var ourSeats=seats.filter(function(s){return s.type==='registration'&&seatInRoster(s.name);});
+  var oppSeats=seats.filter(function(s){return s.type==='registration'&&!seatInRoster(s.name);});
+  var tbdSeats=seats.filter(function(s){return s.type==='tbd';});
+
+  var cls='card'+(state==='live'?' is-live':isNext?' is-next':(state==='done'||past)?' is-past is-done':state==='done'?' is-done':'');
+
+  var fighterRows=ourSeats.map(function(s){
+    var e=seatInRoster(s.name);
+    var badge=state==='live'?'<span class="badge badge-live">LIVE</span>':isNext?'<span class="badge badge-next">NEXT</span>':'';
+    return '<div class="fighter-row"><div class="fighter-name">'+(e?e.nick:s.name)+'</div><span class="fighter-full">'+s.name+'</span>'+badge+'</div>';
+  }).join('');
+
+  var timeStr=fmtTime(match.estimated_start),cdTxt='';
+  if(state==='upcoming'&&startD){
+    var diff=startD-now,cd=fmtCd(diff);
+    if(cd)cdTxt='<div class="match-cd'+(cd.h===0&&cd.m<30?' soon':'')+'">'+(cd.h>0?cd.h+'h ':'')+cd.m+'m away</div>';
+  } else if(state==='live')cdTxt='<div class="match-cd soon">\u25CF Now</div>';
+  else if(state==='done') cdTxt='<div class="match-cd">Done</div>';
+
+  /* mat + match number row */
+  var matChip=match._mat?'<div class="mat-chip"><span class="mat-chip-icon">\uD83D\uDCCC</span>'+match._mat+'</div>':'';
+  var matchChip=match.mat_match_nr?'<div class="match-num-chip">\uD83E\uDD4A Match #'+match.mat_match_nr+'</div>':'';
+  var roundLabel=match.name||('Rd '+(match.round||'1'));
+  var roundChip='<div class="round-chip'+(state==='live'?' live-chip':state==='done'?' done-chip':'')+'">'+(state==='live'?'\uD83D\uDFE0 ':state==='done'?'\u2713 ':'')+roundLabel+'</div>';
+  var infoRow='<div class="match-info-row">'+matChip+matchChip+roundChip+'</div>';
+
+  var vsHtml='';
+  if(oppSeats.length){
+    vsHtml=oppSeats.map(function(s){
+      return '<div class="vs-row"><span class="vs-label">VS</span><div><div class="vs-name">'+s.name+'</div><div class="vs-club">'+(s.club||s.affiliation||'\u2014')+'</div></div></div>';
+    }).join('');
+  } else if(tbdSeats.length){
+    vsHtml='<div class="vs-row"><span class="vs-label">VS</span><div class="vs-name" style="font-style:italic;color:var(--muted)">'+(tbdSeats[0].name||'TBD')+'</div></div>';
+  } else {
+    vsHtml='<div class="vs-row"><span class="vs-label">VS</span><div class="vs-name" style="font-style:italic;color:var(--muted)">Opponent TBD</div></div>';
+  }
+
+  var grp=match.group?'<div class="group-label">'+match.group+'</div>':'';
+
+  var rs='';
+  if(state==='done'){
+    var winSeat=seats.find(function(s){return s.isWinner;});
+    if(winSeat){
+      var ourWin=!!seatInRoster(winSeat.name);
+      var wonByTxt=match.wonBy?' \u00b7 by '+match.wonBy:'';
+      rs='<div class="result-row"><div class="result-pill '+(ourWin?'result-win':'result-lose')+'">'+(ourWin?'\uD83C\uDFC6 WIN':'\uD83D\uDCAA LOSS')+wonByTxt+'</div></div>';
+    }
+  }
+
+  var bracketId = match.bracket_id || '';
+  var dataAttrs = bracketId
+    ? ' data-bid="'+bracketId+'" data-title="'+escAttr(match.group||'Bracket')+'" data-mat="'+escAttr(match._mat||'')+'" style="cursor:pointer;"'
+    : '';
+  return '<div class="'+cls+'"'+dataAttrs+'>'+
+    '<div class="card-header"><div class="fighter-block">'+fighterRows+'</div>'+
+    '<div class="time-col"><div class="start-time'+(past?' past':'')+'">'+timeStr+'</div>'+cdTxt+'</div></div>'+
+    infoRow+
+    '<div class="divider"></div>'+
+    grp+vsHtml+rs+'</div>';
+}
+
+/* ── Results tab ── */
+var medalOverrides = {};
+window.setMedalOverride = function(matchId, nick, medal) {
+  var key = matchId + '_' + nick;
+  if (medalOverrides[key] === medal) delete medalOverrides[key];
+  else medalOverrides[key] = medal;
+  renderResults();
+};
+
+function getMedalForMatch(match, rosterEntry) {
+  var key = match.id + '_' + rosterEntry.nick;
+  if (medalOverrides[key] !== undefined) return medalOverrides[key] === 'none' ? null : medalOverrides[key];
+  if (matchState(match) !== 'done') return null;
+  var seats = match.seats || [];
+  var winSeat = seats.find(function(s){ return s.isWinner; });
+  if (!winSeat) return null;
+  var ourWin = !!seatInRoster(winSeat.name);
+  var roundLabel = (match.name || '').toLowerCase();
+  /* Gold = won the final, Silver = lost the final, Bronze = won bronze match or lost semi */
+  if (ourWin) {
+    if (roundLabel.indexOf('final') >= 0 || roundLabel === '') return 'gold';
+    if (roundLabel.indexOf('bronze') >= 0 || roundLabel.indexOf('3rd') >= 0) return 'bronze';
+    return 'win'; /* intermediate win */
+  } else {
+    if (roundLabel.indexOf('final') >= 0) return 'silver';
+    if (roundLabel.indexOf('bronze') >= 0) return 'bronze';
+    return 'loss';
+  }
+}
+
+function renderResults(){
+  var rc = ge('results-cards');
+  if (!rc) return;
+
+  /* Build per-athlete result map */
+  var athleteData = {};
+  ROSTER.forEach(function(r){
+    athleteData[r.nick] = {entry: r, matches: [], medals: []};
+  });
+
+  teamMatches.forEach(function(match){
+    (match.seats||[]).forEach(function(s){
+      if (s.type !== 'registration') return;
+      var e = seatInRoster(s.name);
+      if (!e) return;
+      var ad = athleteData[e.nick];
+      /* avoid duplicate match ids */
+      if (ad.matches.find(function(m){ return m.id === match.id; })) return;
+      ad.matches.push(match);
+      var medal = getMedalForMatch(match, e);
+      if (medal === 'gold' || medal === 'silver' || medal === 'bronze') {
+        ad.medals.push({medal: medal, group: match.group || '', divType: getDivType(match.group)});
+      }
+    });
+  });
+
+  /* Check if any athlete has completed matches */
+  var anyDone = teamMatches.some(function(m){ return matchState(m) === 'done'; });
+
+  if (!anyDone && teamMatches.length > 0) {
+    rc.innerHTML = '<div class="no-results-yet"><div class="big-icon">\u23F3</div><p>Competition hasn\'t started yet.<br>Results will appear here as matches complete.</p></div>';
+    return;
+  }
+  if (teamMatches.length === 0) {
+    rc.innerHTML = '<div class="no-results-yet"><div class="big-icon">\uD83C\uDFC6</div><p>Load the live tracker first,<br>then check back here for results.</p></div>';
+    return;
+  }
+
+  var medalOrder = {gold: 0, silver: 1, bronze: 2};
+  var html = '';
+
+  ROSTER.forEach(function(r){
+    var ad = athleteData[r.nick];
+    var doneMatches = ad.matches.filter(function(m){ return matchState(m) === 'done'; });
+    if (doneMatches.length === 0) return; /* hide athletes with no completed matches */
+
+    var medalsHtml = '';
+    if (ad.medals.length > 0) {
+      ad.medals.sort(function(a,b){ return (medalOrder[a.medal]||9)-(medalOrder[b.medal]||9); });
+      medalsHtml = ad.medals.map(function(med){
+        var icon = med.medal==='gold'?'\uD83E\uDD47':med.medal==='silver'?'\uD83E\uDD48':'\uD83E\uDD49';
+        var label = med.medal.charAt(0).toUpperCase()+med.medal.slice(1);
+        return '<div class="medal-chip medal-'+med.medal+'"><span class="medal-icon">'+icon+'</span>'+label+'<span class="division-label">'+med.divType+'</span></div>';
+      }).join('');
+    } else {
+      medalsHtml = '<div class="medal-chip medal-none">No medals yet</div>';
+    }
+
+    var winsCount   = doneMatches.filter(function(m){ var ws=m.seats&&m.seats.find(function(s){return s.isWinner;}); return ws&&seatInRoster(ws.name); }).length;
+    var lossesCount = doneMatches.length - winsCount;
+    var record = '<span style="color:var(--green);font-weight:700;">'+winsCount+'W</span> <span style="color:var(--muted);">/</span> <span style="color:var(--red);font-weight:700;">'+lossesCount+'L</span>';
+
+    html += '<div class="athlete-result-card">'+
+      '<div class="athlete-result-header">'+
+        '<div><div class="athlete-result-name">'+r.nick+'</div><div class="athlete-result-full">'+r.full+'</div></div>'+
+        '<div style="font-size:13px;font-family:\'DM Mono\',monospace;">'+record+'</div>'+
+      '</div>'+
+      '<div class="medals-row">'+medalsHtml+'</div>'+
+      (doneMatches.length?'<div class="medal-override-row"><span style="font-size:10px;color:var(--muted);margin-right:6px;">Override:</span>'+
+        ['gold','silver','bronze','none'].map(function(m){
+          var icons={'gold':'&#x1F947;','silver':'&#x1F948;','bronze':'&#x1F949;','none':'&#x2715;'};
+          var lastMatch=doneMatches[doneMatches.length-1]||{id:0};
+          var key=lastMatch.id+'_'+r.nick;
+          var isActive=medalOverrides[key]===m;
+          return '<button class="override-btn'+(isActive?' override-active':'')+'" onclick="setMedalOverride('+lastMatch.id+',\''+r.nick+'\',\''+m+'\')">'+icons[m]+'</button>';
+        }).join('')+'</div>':'')+'</div>';
+  });
+
+  if (!html) html = '<div class="no-results-yet"><div class="big-icon">\uD83C\uDFC6</div><p>Results will appear here as matches finish.</p></div>';
+  rc.innerHTML = html;
+}
+
+
+/* ── Bracket Modal ── */
+var modalBracketId = null;
+
+window.openBracketModal = async function(bracketId, title, mat) {
+  modalBracketId = bracketId;
+  var overlay = ge('bracket-modal');
+  var body    = ge('modal-body');
+  ge('modal-title').textContent = title || 'Bracket';
+  ge('modal-sub').textContent   = mat || '';
+  body.innerHTML = '<div class="bracket-loading"><div class="spinner"></div><p>Loading bracket…</p></div>';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  try {
+    var matches = await fetchBracket(bracketId);
+    body.innerHTML = renderBracketTree(matches);
+  } catch(e) {
+    body.innerHTML = '<div class="bracket-loading"><p style="color:var(--red)">Failed to load bracket.</p></div>';
+  }
+};
+
+window.closeBracketModal = function(e) {
+  if (e && e.target !== ge('bracket-modal')) return;
+  ge('bracket-modal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+function renderBracketTree(matches) {
+  if (!matches || !matches.length) return '<div class="bracket-loading"><p>No matches found.</p></div>';
+
+  /* Group by round, sort rounds */
+  var rounds = {};
+  matches.forEach(function(m) {
+    var r = m.round || 1;
+    if (!rounds[r]) rounds[r] = [];
+    rounds[r].push(m);
+  });
+
+  /* Sort matches within each round by match_nr */
+  var roundKeys = Object.keys(rounds).map(Number).sort(function(a,b){return a-b;});
+  roundKeys.forEach(function(r){
+    rounds[r].sort(function(a,b){return (a.match_nr||0)-(b.match_nr||0);});
+  });
+
+  /* Round label helper */
+  function roundLabel(r, total) {
+    /* Use match names if available */
+    var names = rounds[r].map(function(m){return m.name;}).filter(Boolean);
+    if (names.length && names[0]) return names[0];
+    if (r === Math.max.apply(null, roundKeys)) return 'Final';
+    if (r === Math.max.apply(null, roundKeys) - 1) return 'Semifinal';
+    if (r === Math.max.apply(null, roundKeys) - 2) return 'Quarterfinal';
+    return 'Round ' + r;
+  }
+
+  /* Find max matches in any round for vertical spacing */
+  var maxInRound = Math.max.apply(null, roundKeys.map(function(r){ return rounds[r].length; }));
+
+  var html = '<div class="bracket-wrap">';
+
+  roundKeys.forEach(function(r, ri) {
+    var roundMatches = rounds[r];
+    var label = roundLabel(r, roundKeys.length);
+    var slotHeight = Math.max(88, Math.floor((maxInRound / roundMatches.length) * 88));
+
+    html += '<div class="bracket-round">';
+    html += '<div class="bracket-round-label">' + label + '</div>';
+    html += '<div class="bracket-matches" style="gap:0;">';
+
+    roundMatches.forEach(function(match, mi) {
+      var seats    = match.seats || [];
+      var state    = matchState(match);
+      var isOurs   = seats.some(function(s){return s.type==='registration'&&seatInRoster(s.name);});
+      var isLive   = state === 'live';
+
+      var matchCls = 'bracket-match' + (isOurs?' is-our-match':'') + (isLive?' is-live-match':'');
+
+      /* Connector line to next round */
+      var connector = '';
+      if (ri < roundKeys.length - 1) {
+        var nextRound  = rounds[roundKeys[ri+1]];
+        var nextIdx    = Math.floor(mi / 2);
+        var isTop      = mi % 2 === 0;
+        connector = '<div class="bracket-connector" style="height:'+slotHeight+'px;">' +
+          '<svg viewBox="0 0 20 '+slotHeight+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="M0,'+(slotHeight/2)+' H8 V'+(isTop ? slotHeight : 0)+' H20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>' +
+          '</svg></div>';
+      }
+
+      /* Render seats */
+      var seatsHtml = seats.map(function(s, si) {
+        if (s.type === 'tbd') {
+          return '<div class="bracket-seat tbd"><span class="bracket-seat-name">'+(s.name||'TBD')+'</span></div>';
+        }
+        var isWin  = s.isWinner;
+        var isOurSeat = seatInRoster(s.name);
+        var cls = 'bracket-seat' + (isWin?' winner':'');
+        var dot = isOurSeat ? '<span class="our-dot"></span>' : '';
+        var flag = s.country ? '<span class="bracket-seat-flag">'+countryFlag(s.country)+'</span>' : '';
+        var name = shortenName(s.name);
+        return (si===1?'<div class="bracket-sep"></div>':'')+'<div class="'+cls+'">'+dot+'<span class="bracket-seat-name">'+name+'</span>'+flag+(isWin?'<span style="font-size:10px;">&#x2714;</span>':'')+'</div>';
+      }).join('');
+
+      if (!seatsHtml) seatsHtml = '<div class="bracket-seat tbd"><span class="bracket-seat-name">TBD</span></div><div class="bracket-sep"></div><div class="bracket-seat tbd"><span class="bracket-seat-name">TBD</span></div>';
+
+      html += '<div class="bracket-match-wrap" style="height:'+slotHeight+'px;align-items:center;">';
+      html += '<div class="'+matchCls+'" style="flex-shrink:0;">'+seatsHtml+'</div>';
+      html += connector;
+      html += '</div>';
+    });
+
+    html += '</div></div>';
+  });
+
+  html += '</div>';
+  return html;
+}
+
+function shortenName(name) {
+  if (!name) return 'TBD';
+  /* Check if it's one of our athletes — show nick */
+  var entry = seatInRoster(name);
+  if (entry) return entry.nick + ' ★';
+  /* Shorten: First initial + Last name */
+  var parts = name.trim().split(' ');
+  if (parts.length >= 2) return parts[0][0]+'. '+parts[parts.length-1];
+  return name;
+}
+
+function countryFlag(code) {
+  if (!code || code.length !== 2) return '';
+  var c = code.toUpperCase();
+  return String.fromCodePoint(0x1F1E0-65+c.charCodeAt(0)) + String.fromCodePoint(0x1F1E0-65+c.charCodeAt(1));
+}
+
+
+function escAttr(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+
+/* Event delegation — catch taps on any card with data-bid */
+document.addEventListener('click', function(e){
+  var card = e.target.closest('[data-bid]');
+  if (!card) return;
+  var bid   = card.getAttribute('data-bid');
+  var title = card.getAttribute('data-title');
+  var mat   = card.getAttribute('data-mat');
+  if (bid) openBracketModal(parseInt(bid, 10), title, mat);
+});
+
+
+/* Swipe down to close modal */
+(function(){
+  var startY=0,curY=0,dragging=false;
+  document.addEventListener('touchstart',function(e){
+    if(!ge('bracket-modal').classList.contains('open')) return;
+    startY=e.touches[0].clientY; curY=startY; dragging=true;
+    ge('modal-sheet').style.transition='none';
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!dragging) return;
+    curY=e.touches[0].clientY;
+    var dy=Math.max(0,curY-startY);
+    ge('modal-sheet').style.transform='translateY('+dy+'px)';
+  },{passive:true});
+  document.addEventListener('touchend',function(){
+    if(!dragging) return;
+    dragging=false;
+    ge('modal-sheet').style.transition='';
+    if(curY-startY>80){
+      ge('bracket-modal').classList.remove('open');
+      document.body.style.overflow='';
+    }
+    ge('modal-sheet').style.transform='';
+  });
+})();
+
+window.startTracking=function(){
+  var btn=ge('btn-track');
+  if(btn){btn.disabled=true;btn.textContent='Loading\u2026';}
+  load();
+};
+</script>
+
+<!-- Bracket Modal -->
+<div class="modal-overlay" id="bracket-modal" onclick="closeBracketModal(event)">
+  <div class="modal-sheet" id="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header" style="position:relative;">
+      <div class="modal-title" id="modal-title">Bracket</div>
+      <div class="modal-sub" id="modal-sub"></div>
+      <div class="modal-close" onclick="closeBracketModal()">&#x2715;</div>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="bracket-loading"><div class="spinner"></div><p>Loading bracket...</p></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
